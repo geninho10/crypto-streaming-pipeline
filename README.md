@@ -49,21 +49,22 @@ python consumer.py
 # Terminal B: Producer starten
 python producer.py
 ```
-
 ## 📈 Visualisierung & Ergebnisse
 
-Nachdem die Pipeline gestartet wurde, können die Daten über das InfluxDB-Webinterface visualisiert werden.
+Nachdem die Container mit `docker-compose up -d` gestartet wurden, ist das Dashboard lokal erreichbar.
 
 * **URL:** [http://localhost:8086](http://localhost:8086)
-* **Login:** `admin` / `password12345` 
+* **Login:** `admin` / `password12345`
 * **Organisation:** `crypto-org`
 * **Bucket:** `bitcoin-bucket`
+* **API-Token:** `my-super-crypto-token-2026` (Bereits in den Skripten hinterlegt)
 
-### Schritte zur Ansicht:
-1. Navigieren Sie im Menü links zum **Data Explorer** (Graph-Icon).
-2. Wählen Sie unter **Buckets** den `bitcoin-bucket`.
-3. Wählen Sie unter **Filter** das Measurement `bitcoin_price` und das Feld `price`.
-4. Klicken Sie auf **Submit**, um den Graphen anzuzeigen.
+### Schritte zur Datenansicht:
+1. Loggen Sie sich mit den oben genannten Zugangsdaten ein.
+2. Klicken Sie links im Menü auf das **Graph-Icon** (Data Explorer).
+3. Wählen Sie im unteren Bereich den Bucket `bitcoin-bucket` aus.
+4. Filtern Sie nach dem Measurement `bitcoin_price` und dem Feld `price`.
+5. Klicken Sie auf **Submit**, um den Kursverlauf der 7,45 Mio. Datenpunkte zu sehen.
 
 
 
