@@ -31,4 +31,6 @@ Starten Sie die Container im Detached-Mode:
 ```bash
 docker-compose up -d
 
+### Schritt 2: Pipeline aktivieren 
+
 
