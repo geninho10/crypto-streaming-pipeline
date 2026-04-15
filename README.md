@@ -22,6 +22,13 @@ Das System basiert auf einer Microservice-Architektur, die mittels **Docker Comp
 * **Sprache:** Python 3.9
 * **Libraries:** `kafka-python`, `influxdb-client`, `pandas`
 
+## 📊 Datensatz
+
+Der zugrunde liegende Datensatz enthält ca. 7,45 Millionen Datenpunkte (OHLCV-Daten) im 1-Minuten-Intervall.
+* **Quelle:** Bitstamp (Historical BTC/USD Data)
+* **Format:** CSV
+* **Hinweis:** Aufgrund der Dateigröße (ca. 300MB+) ist die Datei `btcusd_1-min_data.csv` nicht im Repository enthalten. Um die Pipeline zu testen, muss die CSV-Datei im Hauptverzeichnis des Projekts hinterlegt werden.
+
 ## 🚀 Setup & Start
 
 ### Voraussetzungen
