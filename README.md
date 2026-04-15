@@ -48,6 +48,22 @@ python consumer.py
 
 # Terminal B: Producer starten
 python producer.py
+```
+
+## 📈 Visualisierung & Ergebnisse
+
+Nachdem die Pipeline gestartet wurde, können die Daten über das InfluxDB-Webinterface visualisiert werden.
+
+* **URL:** [http://localhost:8086](http://localhost:8086)
+* **Login:** `admin` / `password12345` 
+* **Organisation:** `crypto-org`
+* **Bucket:** `bitcoin-bucket`
+
+### Schritte zur Ansicht:
+1. Navigieren Sie im Menü links zum **Data Explorer** (Graph-Icon).
+2. Wählen Sie unter **Buckets** den `bitcoin-bucket`.
+3. Wählen Sie unter **Filter** das Measurement `bitcoin_price` und das Feld `price`.
+4. Klicken Sie auf **Submit**, um den Graphen anzuzeigen.
 
 
 
