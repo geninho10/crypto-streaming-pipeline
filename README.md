@@ -31,9 +31,4 @@ Starten Sie die Container im Detached-Mode:
 ```bash
 docker-compose up -d
 
-Schritt 2: Pipeline aktivieren
 
-Starten Sie den Consumer, um auf Daten zu warten, und anschließend den Producer:
-
-python consumer.py
-python producer.py
