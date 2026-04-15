@@ -31,6 +31,8 @@ Der zugrunde liegende Datensatz umfasst ca. 7,45 Millionen Datenpunkte im 1-Minu
 
 ## 🚀 Setup & Start
 
+> **Hinweis zur Bequemlichkeit:** Zur Vereinfachung der Inbetriebnahme sind API-Token und Logins in der `docker-compose.yml` und den Python-Skripten bereits aufeinander abgestimmt. Das System ist somit sofort einsatzbereit ("Ready-to-run").
+
 ### Voraussetzungen
 * Docker & Docker Desktop installiert
 * Python 3.9+ (lokal für die Skript-Ausführung)
