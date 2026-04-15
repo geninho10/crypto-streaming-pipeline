@@ -24,10 +24,10 @@ Das System basiert auf einer Microservice-Architektur, die mittels **Docker Comp
 
 ## 📊 Datensatz
 
-Der zugrunde liegende Datensatz enthält ca. 7,45 Millionen Datenpunkte (OHLCV-Daten) im 1-Minuten-Intervall.
+Der zugrunde liegende Datensatz umfasst ca. 7,45 Millionen Datenpunkte im 1-Minuten-Intervall.
 * **Quelle:** Bitstamp (Historical BTC/USD Data)
-* **Format:** CSV
-* **Hinweis:** Aufgrund der Dateigröße (ca. 300MB+) ist die Datei `btcusd_1-min_data.csv` nicht im Repository enthalten. Um die Pipeline zu testen, muss die CSV-Datei im Hauptverzeichnis des Projekts hinterlegt werden.
+* **Download:** [Bitcoin Historical Data auf Kaggle](https://www.kaggle.com/datasets/mczielinski/bitcoin-historical-data) (oder den Link deiner spezifischen Quelle einfügen)
+* **Hinweis:** Aufgrund der Dateigröße ist die Datei `btcusd_1-min_data.csv` nicht im Repository enthalten. Für eine lokale Ausführung muss die CSV-Datei im Hauptverzeichnis des Projekts abgelegt werden.
 
 ## 🚀 Setup & Start
 
