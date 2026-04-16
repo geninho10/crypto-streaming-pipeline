@@ -68,6 +68,9 @@ Nachdem die Container mit `docker-compose up -d` gestartet wurden, ist das Dashb
 4. Filtern Sie nach dem Measurement `bitcoin_price` und dem Feld `price`.
 5. Klicken Sie auf **Submit**, um den Kursverlauf der 7,45 Mio. Datenpunkte zu sehen.
 
+<img width="1512" height="982" alt="terminal" src="https://github.com/user-attachments/assets/10155738-eccc-4a12-940e-74f1058de87f" />
+
+<img width="1512" height="982" alt="dashboard" src="https://github.com/user-attachments/assets/8c59cf97-bb1d-4561-890e-b00af8840bb7" />
 
 
 
