@@ -2,9 +2,9 @@
 
 Dieses Projekt realisiert eine containerisierte Data-Pipeline zur Verarbeitung und Visualisierung von ca. 7,45 Millionen historischen Bitcoin-Handelsdaten (Zeitraum 2012–2024). Das System transformiert statische CSV-Daten in einen kontinuierlichen Datenstrom und ermöglicht eine hocheffiziente Zeitreihen-Analyse.
 
-## 🏗 Architektur
+## Architektur
 
-Das System basiert auf einer Microservice-Architektur, die mittels **Docker Compose** orchestriert wird:
+Das System basiert auf einer Microservice-Architektur, die mittels **Docker Compose** verwaltet wird:
 
 1. **Producer (Python):** Liest Rohdaten aus einer CSV-Datei, transformiert diese in JSON und sendet sie an den Kafka-Broker.
 2. **Message Broker (Apache Kafka & Zookeeper):** Dient als Puffer und Entkopplungsschicht zwischen Ingestion und Speicherung.
@@ -14,7 +14,7 @@ Das System basiert auf einer Microservice-Architektur, die mittels **Docker Comp
 
 
 
-## 🛠 Tech Stack
+## Tech Stack
 
 * **Infrastruktur:** Docker, Docker Compose
 * **Streaming:** Apache Kafka, Zookeeper
@@ -22,14 +22,14 @@ Das System basiert auf einer Microservice-Architektur, die mittels **Docker Comp
 * **Sprache:** Python 3.9
 * **Libraries:** `kafka-python`, `influxdb-client`, `pandas`
 
-## 📊 Datensatz
+## Datensatz
 
 Der zugrunde liegende Datensatz umfasst ca. 7,45 Millionen Datenpunkte im 1-Minuten-Intervall.
 * **Quelle:** Bitstamp (Historical BTC/USD Data)
 * **Download:** [Bitcoin Historical Data auf Kaggle](https://www.kaggle.com/datasets/mczielinski/bitcoin-historical-data) 
 * **Hinweis:** Aufgrund der Dateigröße ist die Datei `btcusd_1-min_data.csv` nicht im Repository enthalten. Für eine lokale Ausführung muss die CSV-Datei im Hauptverzeichnis des Projekts abgelegt werden.
 
-## 🚀 Setup & Start
+## Setup & Start
 
 **Hinweis zur Bequemlichkeit:** Zur Vereinfachung der Inbetriebnahme sind API-Token und Logins in der `docker-compose.yml` und den Python-Skripten bereits aufeinander abgestimmt. Das System ist somit sofort einsatzbereit ("Ready-to-run").
 
@@ -51,7 +51,7 @@ python consumer.py
 # Terminal B: Producer starten
 python producer.py
 ```
-## 📈 Visualisierung & Ergebnisse
+## Visualisierung & Ergebnisse
 
 Nachdem die Container mit `docker-compose up -d` gestartet wurden, ist das Dashboard lokal erreichbar.
 
