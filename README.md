@@ -1,6 +1,6 @@
 #  Crypto-Streaming-Pipeline (BTC/USD)
 
-Dieses Projekt realisiert eine hochperformante End-to-End Dateninfrastruktur zur Echtzeit-Verarbeitung und Analyse von ca. **7,45 Millionen** Bitcoin-Handelsdaten. Das System transformiert statische CSV-Daten mittels **Re-Timestamping** in einen dynamischen Live-Datenstrom und ermöglicht eine latenzarme Zeitreihen-Analyse.
+Dieses Projekt realisiert eine End-to-End Dateninfrastruktur zur Echtzeit-Verarbeitung und Analyse von ca. **7,45 Millionen** Bitcoin-Handelsdaten. Das System transformiert statische CSV-Daten mittels **Re-Timestamping** in einen dynamischen Live-Datenstrom und ermöglicht eine latenzarme Zeitreihen-Analyse.
 
 ##  Architektur & Highlights
 
