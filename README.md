@@ -80,3 +80,17 @@ Das integrierte InfluxDB-Dashboard visualisiert den Rohpreis, den gleitenden Dur
 6. Klicken Sie auf **Submit**, um den Kursverlauf und die Alerts zu visualisieren.
 
 > **Tipp:** Nutzen Sie die "Auto-Refresh"-Funktion oben rechts im Dashboard (z.B. alle 5s), um den Live-Datenstrom bei 100 Hz optimal zu verfolgen.
+
+##  System-Einblicke & Validierung
+
+### 1. Echtzeit-Monitoring Dashboard (InfluxDB)
+Das Dashboard visualisiert den Live-Datenstrom. Die blaue Linie stellt den Rohpreis dar, während die lila Linie den berechneten **Moving Average (SMA)** zeigt. Die roten Warnsymbole markieren automatisch erkannte **Anomalien** (>2% Abweichung)
+
+<img width="1511" height="794" alt="Readme1" src="https://github.com/user-attachments/assets/a984a0db-3113-4cef-b7ff-febcf06657a6" />
+
+### 2. Pipeline-Validierung & Ressourcen-Optimierung
+Im Terminal ist die ressourceneffiziente Verarbeitung durch **Meilenstein-Ausgaben** sichtbar. Anstatt jedes Event einzeln zu loggen (I/O-Overhead), meldet das System den Status in 10.000er-Schritten.
+
+<img width="1512" height="982" alt="Readme2" src="https://github.com/user-attachments/assets/31df15a1-e03d-41d4-9ac9-8683bde0d7ad" />
+
+
