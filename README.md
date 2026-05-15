@@ -40,6 +40,7 @@ Das System ist "Ready-to-run" vorkonfiguriert (Initial-Tokens und Logins sind be
 ```bash
 docker-compose up -d
 
+
 ### 2. Pipeline aktivieren
 
 Führen Sie die Skripte in separaten Terminals aus, um den Datenfluss zu starten:
