@@ -1,78 +1,79 @@
-# Crypto-Streaming-Pipeline (BTC/USD)
+#  Crypto-Streaming-Pipeline (BTC/USD)
 
-Dieses Projekt realisiert eine containerisierte Data-Pipeline zur Verarbeitung und Visualisierung von ca. 7,45 Millionen historischen Bitcoin-Handelsdaten (Zeitraum 2012–2024). Das System transformiert statische CSV-Daten in einen kontinuierlichen Datenstrom und ermöglicht eine hocheffiziente Zeitreihen-Analyse.
+Dieses Projekt realisiert eine hochperformante End-to-End Dateninfrastruktur zur Echtzeit-Verarbeitung und Analyse von ca. **7,45 Millionen** Bitcoin-Handelsdaten. Das System transformiert statische CSV-Daten mittels **Re-Timestamping** in einen dynamischen Live-Datenstrom und ermöglicht eine latenzarme Zeitreihen-Analyse.
 
-## Architektur
+##  Architektur & Highlights
 
-Das System basiert auf einer Microservice-Architektur, die mittels **Docker Compose** verwaltet wird:
+Das System ist als Microservice-Architektur konzipiert und wird vollständig über **Docker Compose (Infrastructure as Code)** orchestriert.
 
-1. **Producer (Python):** Liest Rohdaten aus einer CSV-Datei, transformiert diese in JSON und sendet sie an den Kafka-Broker.
-2. **Message Broker (Apache Kafka & Zookeeper):** Dient als Puffer und Entkopplungsschicht zwischen Ingestion und Speicherung.
-3. **Consumer (Python):** Abonniert das Kafka-Topic, validiert die Daten und persistiert sie in der Datenbank.
-4. **Datenbank (InfluxDB):** Spezialisierte Time-Series Database zur Speicherung und Aggregation der Millionen Datenpunkte.
-5. **Visualisierung:** Integriertes InfluxDB-Dashboard zur Analyse der Kursverläufe mittels Flux-Queries.
+* **Ingestion-Rate:** Kalibriert auf **100 Hz** (entspricht einer 6.000-fachen Beschleunigung der Realzeit).
+* **Re-Timestamping:** Transformation historischer Daten (2012–2024) in aktuelle Systemzeit für echtes Live-Monitoring.
+* **Stateful Stream Processing:** Berechnung eines **Moving Average (SMA 100)** und Echtzeit-**Anomalie-Erkennung** (>2% Abweichung) direkt im Arbeitsspeicher.
+* **Performance:** Bewältigt Lastspitzen von bis zu **25.000 Datenpunkten/Sekunde** (Stresstest-erprobt).
+* **I/O-Optimierung:** Reduzierter Overhead durch Meilenstein-Ausgaben (Logging alle 10.000 Punkte).
 
+### Pipeline-Komponenten
+1.  **Producer (Python):** Stream-Ingestion mit Taktsteuerung und Zeit-Transformation.
+2.  **Message Broker (Apache Kafka):** Hochverfügbare Entkopplungsschicht und Datenpuffer.
+3.  **Processor (Python):** Stateful Processing zur Berechnung von Trends und Alerts.
+4.  **Consumer (Python):** Effiziente Persistierung der angereicherten Daten.
+5.  **Datenbank (InfluxDB):** Time-Series Database für Hochfrequenz-Datenströme.
 
-
-## Systemkomponenten
-
+##  Tech Stack
 * **Infrastruktur:** Docker, Docker Compose
 * **Streaming:** Apache Kafka, Zookeeper
-* **Datenbank:** InfluxDB 2.x
+* **Datenbank:** InfluxDB 2.7
 * **Sprache:** Python 3.9
 * **Libraries:** `kafka-python`, `influxdb-client`, `pandas`
 
-## Datensatz
+##  Datensatz
+Verwendet wird der Bitstamp Historical BTC/USD Datensatz (1-min Intervall).
+* **Umfang:** ~7,45 Millionen Datenpunkte.
+* **Quelle:** [Kaggle - Bitcoin Historical Data](https://www.kaggle.com/datasets/mczielinski/bitcoin-historical-data)
+* **Installation:** Die Datei `btcusd_1-min_data.csv` muss manuell im Hauptverzeichnis abgelegt werden (in der `.gitignore` aufgrund der Dateigröße ausgeschlossen).
 
-Der zugrunde liegende Datensatz umfasst ca. 7,45 Millionen Datenpunkte im 1-Minuten-Intervall.
-* **Quelle:** Bitstamp (Historical BTC/USD Data)
-* **Download:** [Bitcoin Historical Data auf Kaggle](https://www.kaggle.com/datasets/mczielinski/bitcoin-historical-data) 
-* **Hinweis:** Aufgrund der Dateigröße ist die Datei `btcusd_1-min_data.csv` nicht im Repository enthalten. Für eine lokale Ausführung muss die CSV-Datei im Hauptverzeichnis des Projekts abgelegt werden.
+##  Setup & Start
 
-## Setup & Start
+Das System ist "Ready-to-run" vorkonfiguriert (Initial-Tokens und Logins sind bereits in der `docker-compose.yml` hinterlegt).
 
-**Hinweis zur Inbetriebnahme:** Zur Vereinfachung der Inbetriebnahme sind API-Token und Logins in der `docker-compose.yml` und den Python-Skripten bereits aufeinander abgestimmt. Das System ist somit sofort einsatzbereit ("Ready-to-run").
-
-### Voraussetzungen
-* Docker & Docker Desktop installiert
-* Python 3.9+ (lokal für die Skript-Ausführung)
-
-### Ausführung der Pipeline
-Führen Sie zuerst Schritt 1 aus, um die Container zu starten. Sobald diese laufen, führen Sie Schritt 2 in separaten Terminal-Fenstern aus:
-
+### 1. Infrastruktur starten
 ```bash
-# --- SCHRITT 1: Infrastruktur starten ---
 docker-compose up -d
 
-# --- SCHRITT 2: Skripte aktivieren ---
-# Terminal A: Consumer starten
+### 2. Pipeline aktivieren
+
+Führen Sie die Skripte in separaten Terminals aus, um den Datenfluss zu starten:
+
+# Terminal 1: Analyse-Logik
+python processor.py
+
+# Terminal 2: Datenbank-Persistierung
 python consumer.py
 
-# Terminal B: Producer starten
+# Terminal 3: Daten-Einspeisung (100 Hz)
 python producer.py
-```
-## Visualisierung & Ergebnisse
 
-Nachdem die Container mit `docker-compose up -d` gestartet wurden, ist das Dashboard lokal erreichbar.
+Visualisierung & Monitoring
+Das integrierte InfluxDB-Dashboard visualisiert den Rohpreis, den gleitenden Durchschnitt (SMA) und die identifizierten Anomalien in Echtzeit.
 
-* **URL:** [http://localhost:8086](http://localhost:8086)
-* **Login:** `admin` / `password12345`
-* **Organisation:** `crypto-org`
-* **Bucket:** `bitcoin-bucket`
-* **API-Token:** `my-super-crypto-token-2026` (Bereits in den Skripten hinterlegt)
+URL: http://localhost:8086
 
-### Schritte zur Datenansicht:
-1. Loggen Sie sich mit den oben genannten Zugangsdaten ein.
-2. Klicken Sie links im Menü auf das **Graph-Icon** (Data Explorer).
-3. Wählen Sie im unteren Bereich den Bucket `bitcoin-bucket` aus.
-4. Filtern Sie nach dem Measurement `bitcoin_price` und dem Feld `price`.
-5. Klicken Sie auf **Submit**, um den Kursverlauf der 7,45 Mio. Datenpunkte zu sehen.
+Login: admin / password12345
 
-<img width="1512" height="982" alt="terminal" src="https://github.com/user-attachments/assets/10155738-eccc-4a12-940e-74f1058de87f" />
+Organisation: crypto-org
 
-<img width="1512" height="982" alt="dashboard" src="https://github.com/user-attachments/assets/8c59cf97-bb1d-4561-890e-b00af8840bb7" />
+Bucket: bitcoin-bucket
 
+Token: my-super-crypto-token-2026 (bereits vorkonfiguriert)
 
+Dashboard-Konfiguration:
 
+Loggen Sie sich im InfluxDB-UI ein.
 
+Navigieren Sie zum Data Explorer.
 
+Wählen Sie den Bucket bitcoin-bucket.
+
+Filtern Sie nach Measurement bitcoin_price und den Feldern price, sma und is_anomaly.
+
+Klicken Sie auf Submit, um den Kursverlauf und die Alerts zu visualisieren.
