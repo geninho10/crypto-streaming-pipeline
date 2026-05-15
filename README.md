@@ -4,7 +4,7 @@ Dieses Projekt realisiert eine End-to-End Dateninfrastruktur zur Echtzeit-Verarb
 
 ##  Architektur & Highlights
 
-Das System ist als Microservice-Architektur konzipiert und wird vollständig über **Docker Compose (Infrastructure as Code)** orchestriert.
+Das System ist als Microservice-Architektur konzipiert und wird vollständig über **Docker Compose (Infrastructure as Code)** verwaltet.
 
 * **Ingestion-Rate:** Kalibriert auf **100 Hz** (entspricht einer 6.000-fachen Beschleunigung der Realzeit).
 * **Re-Timestamping:** Transformation historischer Daten (2012–2024) in aktuelle Systemzeit für echtes Live-Monitoring.
