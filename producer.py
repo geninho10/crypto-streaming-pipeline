@@ -1,53 +1,68 @@
-import pandas as pd
-import json
 import time
+import json
+import csv
 from kafka import KafkaProducer
 
-# --- KONFIGURATION ---
-FILE_NAME = "btcusd_1-min_data.csv" 
-TOPIC_NAME = "crypto-prices"
+# KONFIGURATION
+CSV_FILE = 'btcusd_1-min_data.csv' 
+TOPIC = 'bitcoin-raw'
 
-# 1. Kafka Producer Initialisierung
+producer = KafkaProducer(
+    bootstrap_servers='localhost:9092',
+    value_serializer=lambda v: json.dumps(v).encode('utf-8'),
+    batch_size=65536, 
+    linger_ms=5
+)
+
+print(f"🚀 Starte Echtzeit-Streaming von {CSV_FILE}...")
+
+count = 0
+
 try:
-    producer = KafkaProducer(
-        bootstrap_servers=['localhost:9092'],
-        value_serializer=lambda x: json.dumps(x).encode('utf-8')
-    )
-    print("✅ Verbindung zu Apache Kafka erfolgreich hergestellt.")
+    with open(CSV_FILE, mode='r', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        
+        
+        possible_columns = ['Weighted_Price', 'price', 'Close', 'close', 'Weighted Price']
+        actual_columns = reader.fieldnames
+        column_to_use = next((c for c in possible_columns if c in actual_columns), None)
+
+        if not column_to_use:
+            print(f"❌ Fehler: Keine Preis-Spalte gefunden! Vorhanden sind: {actual_columns}")
+            exit()
+
+        print(f"✅ Nutze Spalte: '{column_to_use}'")
+
+        for row in reader:
+            val = row[column_to_use]
+            if not val or val.lower() == 'nan':
+                continue
+                
+            try:
+                price = float(val)
+                data = {
+                    'price': price,
+                    'timestamp': time.time()
+                }
+                
+                producer.send(TOPIC, data)
+                count += 1
+                
+                
+                time.sleep(0.01) 
+                # -----------------------------
+
+                if count % 1000 == 0:
+                    print(f"📡 Streaming-Status: {count} Punkte gesendet (Echtzeit-Simulation)...")
+            except ValueError:
+                continue
+
+    print(f"✅ Fertig! Insgesamt {count} Punkte gesendet.")
+
+except FileNotFoundError:
+    print(f"❌ Datei '{CSV_FILE}' nicht gefunden!")
 except Exception as e:
-    print(f"❌ Kritischer Kafka-Fehler: {e}")
-    exit()
-
-def stream_data():
-    """
-    Liest historische Daten aus einer CSV und simuliert einen Echtzeit-Stream
-    via Kafka. Nutzt Chunking zur Optimierung des Arbeitsspeichers.
-    """
-    print(f"📂 Datei {FILE_NAME} wird geladen. Initialisiere Simulation...")
-    
-    try:
-        # Effizientes Einlesen großer Datensätze in Chunks (1000 Zeilen pro Schritt)
-        for chunk in pd.read_csv(FILE_NAME, chunksize=1000):
-            for index, row in chunk.iterrows():
-                # Transformation der Zeile in ein Dictionary (JSON-kompatibel)
-                message = row.to_dict()
-                
-                # Senden der Nachricht an den Kafka-Broker
-                producer.send(TOPIC_NAME, value=message)
-                
-                # Status-Monitoring und Drosselung alle 1000 Datensätze
-                if index % 1000 == 0:
-                    print(f"🚀 Status: {index} Datenpunkte erfolgreich übertragen.")
-                    # Kurze Latenz zur Steuerung der CPU-Last
-                    time.sleep(0.01) 
-            
-            # Stellt sicher, dass alle Nachrichten gesendet wurden
-            producer.flush()
-                    
-    except FileNotFoundError:
-        print(f"❌ Fehler: Die Quelldatei '{FILE_NAME}' wurde nicht im Verzeichnis gefunden.")
-    except Exception as e:
-        print(f"❌ Unvorhergesehener Fehler beim Streaming: {e}")
-
-if __name__ == "__main__":
-    stream_data()
+    print(f"❌ Fehler: {e}")
+finally:
+    producer.flush()
+    producer.close() 
