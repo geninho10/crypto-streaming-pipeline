@@ -58,27 +58,25 @@ python producer.py
 ```
 
 
-Visualisierung & Monitoring
+## 📈 Visualisierung & Monitoring
+
 Das integrierte InfluxDB-Dashboard visualisiert den Rohpreis, den gleitenden Durchschnitt (SMA) und die identifizierten Anomalien in Echtzeit.
 
-URL: http://localhost:8086
+### Zugangsdaten & Konfiguration
+| Parameter | Wert |
+| :--- | :--- |
+| **URL** | [http://localhost:8086](http://localhost:8086) |
+| **User / PW** | `admin` / `password12345` |
+| **Organisation** | `crypto-org` |
+| **Bucket** | `bitcoin-bucket` |
+| **API-Token** | `my-super-crypto-token-2026` |
 
-Login: admin / password12345
+### Schritte zur Datenansicht
+1. Loggen Sie sich im InfluxDB-UI ein.
+2. Navigieren Sie im linken Menü zum **Data Explorer** (Graph-Icon).
+3. Wählen Sie im Filter-Panel den Bucket `bitcoin-bucket`.
+4. Filtern Sie nach dem Measurement `bitcoin_price`.
+5. Wählen Sie unter _Fields_ die Einträge `price`, `sma` und `is_anomaly` aus.
+6. Klicken Sie auf **Submit**, um den Kursverlauf und die Alerts zu visualisieren.
 
-Organisation: crypto-org
-
-Bucket: bitcoin-bucket
-
-Token: my-super-crypto-token-2026 (bereits vorkonfiguriert)
-
-Dashboard-Konfiguration:
-
-Loggen Sie sich im InfluxDB-UI ein.
-
-Navigieren Sie zum Data Explorer.
-
-Wählen Sie den Bucket bitcoin-bucket.
-
-Filtern Sie nach Measurement bitcoin_price und den Feldern price, sma und is_anomaly.
-
-Klicken Sie auf Submit, um den Kursverlauf und die Alerts zu visualisieren.
+> **Tipp:** Nutzen Sie die "Auto-Refresh"-Funktion oben rechts im Dashboard (z.B. alle 5s), um den Live-Datenstrom bei 100 Hz optimal zu verfolgen.
