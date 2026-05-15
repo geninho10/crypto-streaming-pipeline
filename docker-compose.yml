@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # --- MESSAGING LAYER ---
+
   zookeeper:
     image: confluentinc/cp-zookeeper:7.5.0
     environment:
@@ -24,7 +24,7 @@ services:
     networks:
       - crypto-network
 
-  # --- SERVING LAYER ---
+ 
   influxdb:
     image: influxdb:2.7
     ports:
@@ -35,7 +35,7 @@ services:
       - DOCKER_INFLUXDB_INIT_PASSWORD=password12345
       - DOCKER_INFLUXDB_INIT_ORG=crypto-org
       - DOCKER_INFLUXDB_INIT_BUCKET=bitcoin-bucket
-      # Dieser Token muss mit der consumer.py übereinstimmen
+    
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-super-crypto-token-2026
     networks:
       - crypto-network
