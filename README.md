@@ -38,7 +38,7 @@ Das System ist "Ready-to-run" vorkonfiguriert (Initial-Tokens und Logins sind be
 
 ### 1. Infrastruktur starten
 ```bash
-docker-compose up -d
+docker-compose up -d```
 
 
 ### 2. Pipeline aktivieren
