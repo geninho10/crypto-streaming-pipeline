@@ -46,6 +46,7 @@ docker-compose up -d
 
 Führen Sie die Skripte in separaten Terminals aus, um den Datenfluss zu starten:
 
+```bash
 # Terminal 1: Analyse-Logik
 python processor.py
 
@@ -54,6 +55,8 @@ python consumer.py
 
 # Terminal 3: Daten-Einspeisung (100 Hz)
 python producer.py
+```
+
 
 Visualisierung & Monitoring
 Das integrierte InfluxDB-Dashboard visualisiert den Rohpreis, den gleitenden Durchschnitt (SMA) und die identifizierten Anomalien in Echtzeit.
